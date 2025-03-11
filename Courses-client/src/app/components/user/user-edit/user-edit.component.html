@@ -1,0 +1,31 @@
+<form [formGroup]="updateForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label for="name">Name:</label>
+      <input id="name" formControlName="name" />
+    
+    </div>
+    <div>
+      <label for="address">Address:</label>
+      <input id="address" formControlName="address" />
+  </div>
+    <div>
+      <label for="email">Email:</label>
+      <input id="email" formControlName="email" />
+    </div>
+    <div>
+      <label for="password">Password:</label>
+      <input id="password" type="password" formControlName="password" />
+    </div>
+    <div>
+      <label for="role">Role:</label>
+      <select id="role" formControlName="role">
+        <option [value]="Role.Student">Student</option>
+        <option [value]="Role.Teacher">Teacher</option>
+     <option [value]="Role.Admin">Admin</option>
+      
+     
+   </select>
+    </div>
+    <button type="submit" [disabled]="updateForm.invalid">Update Student</button>
+  </form>
+  

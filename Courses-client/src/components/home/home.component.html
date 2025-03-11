@@ -1,0 +1,20 @@
+<header class="app-header">
+  <div class="logo">
+    <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="home">עמוד הבית</mat-icon>
+    <a routerLink="home">עמוד הבית</a>
+  </div>
+  
+  <div class="auth-buttons">
+    <button mat-button>
+      <mat-icon>person_add</mat-icon>
+      <a routerLink="register">הרשמה</a>
+    </button>
+
+    <button mat-button>
+      <mat-icon>login</mat-icon>
+      <a routerLink="login">התחברות</a>
+    </button>
+  </div>
+</header>
+
+<router-outlet></router-outlet>
