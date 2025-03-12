@@ -7,9 +7,13 @@ export interface User {
     email: string;
     password:string;
     role?: Role; 
-    course:Course[]
+    courses:Course[]
 }
-
+export type ResponceSign={
+    message:string,
+    userId:number,
+    token:string
+}
 export enum Role {
     Student = 0,
     Teacher = 1,

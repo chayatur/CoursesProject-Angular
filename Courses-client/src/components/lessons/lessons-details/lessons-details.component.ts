@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Lesson } from '../../models/lesson.model';
-import { LessonService } from '../../services/lesson.service';
+import { Lesson } from '../../../models/lesson.model';
+import { LessonService } from '../../../services/lesson.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button'; // עבור כפתורים

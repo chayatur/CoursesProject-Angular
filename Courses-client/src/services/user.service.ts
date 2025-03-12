@@ -1,67 +1,82 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { User } from '../models/user.model';
-import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, catchError, Observable, of, tap } from 'rxjs';
-import { env } from 'process';
-import { Router } from '@angular/router';
+import { ResponceSign,Role,User } from '../models/user.model';
+import { Observable, BehaviorSubject, tap, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  currentUser!: User;
-    constructor(private http: HttpClient, private router: Router) {}
+  private users: User[] = [];
+  private currentUserSubject: BehaviorSubject<User> = new BehaviorSubject<User>({ id: -1, name: '', email: '', password: '', role: Role.Student, courses: [] });
+  token!: string;
 
-    private userSubject = new BehaviorSubject<User | null>(null)
-    createUser(user: User): Observable<any> {
-        return this.http.post<any>(`${env}/user/register`, user).pipe(
-            tap((res: any) => {
-                this.currentUser = user;
-                this.currentUser.id = res.userId;
-                this.currentUser.course = [];
-            }),
-           catchError(this.handleError('createUser'))
-        );
-    }
+  private apiUrl = 'http://localhost:3000/api';
 
-    register(name: string, email: string, password: string, role: string): Observable<any> {
-        const body = { name, email, password, role };
-        return this.http.post(`${env}/register`, body).pipe(
-            catchError(this.handleError('register')),
-            tap(() => this.router.navigate(['/login'])) // ניתוב לדף הכניסה במקרה של הצלחה
-        );
-    }
+  constructor(private http: HttpClient) { }
 
-    login(email: string, password: string): Observable<any> {
-        const body = { email, password };
-        return this.http.post(`${env}/login`, body).pipe(
-            catchError(this.handleError('login')),
-            tap((res: any) => {
-                sessionStorage.setItem('token', res.token);
-                this.router.navigate(['/home']); // ניתוב לדף הבית במקרה של הצלחה
-            })
-        );
-    }
+  get currentUser(): User {
+    return this.currentUserSubject.value;
+  }
 
-    logout(): void {
-        sessionStorage.removeItem('token');
-        this.router.navigate(['/login']);
-    }
+  getUsers(): Observable<User[]> {
+    return this.http.get<User[]>(`${this.apiUrl}/users`);
+  }
 
-    private handleError(operation: string) {
-        return (error: any): Observable<any> => {
-            let errorMessage = `Error, ${operation} failed`;
-            if (error.status === 400) {
-                errorMessage = 'Invalid input. Please check your data.';
-            } else if (error.status === 409) {
-                errorMessage = 'Email already exists. Please use a different email.';
-            } else if (error.status === 401) {
-                errorMessage = 'Incorrect password. Please try again.';
-            } else if (error.status === 404) {
-                errorMessage = 'User does not exist. Please register.';
-            }
-            console.error(errorMessage); // לוג של השגיאה
-            return of(null); // החזרת Observable ריק
+  createUser(user: User): Observable<ResponceSign> {
+    const res = this.http.post<ResponceSign>(`${this.apiUrl}/auth/register`, user).pipe(
+      tap((res: ResponceSign) => {
+        user.id = res.userId;
+        this.token = res.token;
+        user.courses = [];
+        this.currentUserSubject.next(user); 
+      })
+    );
+    return res;
+  }
+
+  loginUser(emailPassword: any): Observable<User> {
+    return this.http.post<User>(`${this.apiUrl}/auth/login`, emailPassword).pipe(
+      tap((res: any) => {
+        const user: User = {
+          id: res.userId,
+          name: res.name,
+          email: res.email,
+          password: '', // אל תשמור סיסמאות
+          role: res.role,
+          courses: []
         };
+        sessionStorage.setItem('token', res.token);
+        this.currentUserSubject.next(user); 
+      })
+    );
+}
+
+
+  updateUser(userId: string, user: User): Observable<User> {
+    return this.http.put<User>(`${this.apiUrl}/users/${userId}`, user);
+  }
+
+  deleteUser(userId: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/users/${userId}`);
+  }
+
+  getUserById(): Observable<User> {
+    // בדוק אם המשתמש הנוכחי כבר קיים
+    const currentUser = this.currentUserSubject.value;
+    if (currentUser) {
+        // אם כן, מחזיר Observable עם המשתמש הנוכחי
+        return of(currentUser); // מחזיר את המשתמש הנוכחי כ-Observable
     }
+
+    // אם לא, מבצע קריאה לשרת
+    const headers = new HttpHeaders({
+        'Authorization': `Bearer ${this.token}`
+    });
+    return this.http.get<User>(`${this.apiUrl}/users/${this.currentUser.id}`, { headers }).pipe(
+        tap((res: User) => {
+            this.currentUserSubject.next(res); // מעדכן את המשתמש הנוכחי
+        })
+    );
+}
 }

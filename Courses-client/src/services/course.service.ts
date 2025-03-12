@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
-import { Course } from '../models/course.model';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { env } from './environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Course } from '../models/course.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CourseService {
+  private apiUrl = 'http://localhost:3000/api/courses';
+  private currentCoursesSubject = new BehaviorSubject<Course[]>([]);
+  public currentCourses$ = this.currentCoursesSubject.asObservable();
 
   constructor(private http: HttpClient) {}
   
@@ -31,6 +34,15 @@ export class CourseService {
 
     return this.http.get<Course>(`${env}/${id}`);
   }
+  getCoursesForUser(userId: number): Observable<any> {
+    return this.http.get<any[]>(`${this.apiUrl}/student/${userId}`).pipe(
+     tap(res => {
+       console.log(res);
+       this.currentCoursesSubject.next(res);
+     })
+   );
+ }
+ 
  // פונקציה לעדכון קורס לפי ID
  updateCourse(id: any, updates: any): Observable<any> {
 

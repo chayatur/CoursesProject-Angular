@@ -10,12 +10,13 @@ import { CourseDirective } from '../../../directive/course.directive';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-  selector: 'app-courses',
+  selector: 'app-add-courses',
+  standalone:true,
   imports: [RouterOutlet,MatCardModule, MatButtonModule,RouterLinkActive, RouterLink,CourseDirective,MatButtonModule, MatIconModule],
-  templateUrl: './courses.component.html',
-  styleUrl: './courses.component.css'
+  templateUrl: './add-courses.component.html',
+  styleUrl: './add-courses.component.css'
 })
-export class CoursesComponent implements OnInit{
+export class AddCourseComponent implements OnInit{
   addCourseForm!: FormGroup;
 
   constructor(public courseService: CourseService, private fb: FormBuilder, private router: Router) {}
