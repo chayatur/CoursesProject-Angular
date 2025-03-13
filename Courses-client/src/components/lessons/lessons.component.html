@@ -1,50 +1,96 @@
-<p>lessons works!</p>
+<!-- <p>lessons works!</p>
 <div class="courses-container">
-    <h2>Available Lessons</h2>
-    @if(this.user$.value.role=="teacher"){
-    <button class="btAdd" mat-raised-button color="primary" (click)="add()">
-      {{"Add Lesson"|icon }} 
-    </button>
-   }
-    
+  <h2>Available Lessons</h2>
+  @if(this.user$ | async as user) { 
+    @if(user.role == 'teacher') {
+      <button class="btAdd" mat-raised-button color="primary" (click)="add()">
+        {{"Add Lesson"|icon }} 
+      </button>
+    }
+
     <div class="courses-grid">
-      @for(lesson of lessons$.value; track lesson.id){
-      <mat-card class="course-card">
-        <mat-card-header>
-          <!-- <mat-icon>menu_book</mat-icon> -->
-          <mat-card-title>{{ lesson.title }}</mat-card-title>
-        </mat-card-header>
-  
-        <mat-card-content>
-          <p>{{ lesson.content }}</p>
-        </mat-card-content>
-  
-        <mat-card-actions>
-            @if(this.user$.value.role!="student"){
-            <button mat-icon-button (click)="edit(lesson)">
-              <mat-icon>edit</mat-icon>
-            </button>
-            <button mat-icon-button (click)="deleteLesson(lesson.id)">
-              <mat-icon>delete</mat-icon>
-            </button>
-        }
-        </mat-card-actions>
-  
-      </mat-card>
+      @for(lesson of lessons; track lesson.id) {
+        <mat-card class="course-card">
+          <mat-card-header>
+            <mat-card-title>{{ lesson.title }}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p>{{ lesson.content }}</p>
+          </mat-card-content>
+          <mat-card-actions>
+            @if(user.role != 'student') {
+              <button mat-icon-button (click)="edit(lesson)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button (click)="deleteLesson(lesson.id)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            }
+          </mat-card-actions>
+        </mat-card>
       }
     </div>
-  </div>
-  
-  @if(editFlag){
-    <app-lesson-details
-      [lesson]="lessonToChange"
-      (childSaveLesson)="updateLesson($event)">
-    </app-lesson-details>
   }
-  
-  @if(addFlag){
-    <app-lesson-details
-      [lesson]="lessonToChange"
-      (childSaveLesson)="addLesson($event)">
-    </app-lesson-details>
-  }
+</div>
+
+@if(editFlag) {
+  <app-lesson-details
+    [lesson]="lessonToChange"
+    (childSaveLesson)="updateLesson($event)">
+  </app-lesson-details>
+}
+
+@if(addFlag) {
+  <app-lesson-details
+    [lesson]="lessonToChange"
+    (childSaveLesson)="addLesson($event)">
+  </app-lesson-details>
+} -->
+<p>lessons works!</p>
+<div class="courses-container">
+  <h2>Available Lessons</h2>
+  <ng-container *ngIf="user$ | async as user">
+    <ng-container *ngIf="user.role !== undefined && user.role === 'teacher'">
+      <button class="btAdd" mat-raised-button color="primary" (click)="add()">
+        {{"Add Lesson" | icon }} 
+      </button>
+    </ng-container>
+
+    <div class="courses-grid">
+      <ng-container *ngFor="let lesson of lessons; trackBy: trackByFn">
+        <mat-card class="course-card">
+          <mat-card-header>
+            <mat-card-title>{{ lesson.title }}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p>{{ lesson.content }}</p>
+          </mat-card-content>
+          <mat-card-actions>
+            <ng-container *ngIf="user.role !== undefined && user.role !== 'student'">
+              <button mat-icon-button (click)="edit(lesson)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button (click)="deleteLesson(lesson.id)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </ng-container>
+          </mat-card-actions>
+        </mat-card>
+      </ng-container>
+    </div>
+  </ng-container>
+</div>
+
+<ng-container *ngIf="editFlag">
+  <app-lesson-details
+    [lesson]="lessonToChange"
+    (childSaveLesson)="updateLesson($event)">
+  </app-lesson-details>
+</ng-container>
+
+<ng-container *ngIf="addFlag">
+  <app-lesson-details
+    [lesson]="lessonToChange"
+    (childSaveLesson)="addLesson($event)">
+  </app-lesson-details>
+</ng-container>

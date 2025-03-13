@@ -12,11 +12,15 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { Lesson } from '../../models/lesson.model';
 import { IconPipe } from '../../pipe/icon.pipe';
 import { LessonDetailsComponent } from './lessons-details/lessons-details.component';
+import { UserService } from '../../services/user.service';
+import { Observable } from 'rxjs';
+import { User } from '../../models/user.model';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-lessons',
   standalone: true,
-  imports: [MatListModule,MatIconModule,MatButtonModule,MatDialogModule,MatInputModule,MatFormFieldModule,MatCardModule
+  imports: [MatListModule,MatIconModule,MatButtonModule,MatDialogModule,MatInputModule,MatFormFieldModule,MatCardModule,CommonModule
     ,MatGridListModule,LessonDetailsComponent,IconPipe
   ],
   templateUrl: './lessons.component.html',
@@ -28,10 +32,12 @@ export class LessonsComponent implements OnInit {
   addFlag = false;
   editFlag = false;
   lessons: Lesson[] = []; 
+  user$!: Observable<User>; // הגדרה של user$ כאן
 
-  constructor(private activatedRoute: ActivatedRoute, private lessonService: LessonService) { }
+  constructor(private activatedRoute: ActivatedRoute, private lessonService: LessonService, private userService: UserService) { }
 
   ngOnInit(): void {
+    this.user$ = this.userService.currentUserObservable; // העברת ההגדרה לכאן
     this.activatedRoute.paramMap.subscribe(params => {
       const id = params.get('id');
       if (id) {

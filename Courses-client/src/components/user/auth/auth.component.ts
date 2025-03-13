@@ -6,11 +6,12 @@ import { RegisterComponent } from '../register/register.component';
 import { MatButtonModule } from '@angular/material/button';
 import { HomeComponent } from '../../home/home.component';
 import { CourseService } from '../../../services/course.service';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-auth',
   standalone: true,
-  imports: [LoginComponent, RegisterComponent, HomeComponent],
+  imports: [LoginComponent,RouterModule, RegisterComponent, HomeComponent],
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.css'
 })
