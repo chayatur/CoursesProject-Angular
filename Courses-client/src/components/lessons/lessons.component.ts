@@ -14,17 +14,15 @@ import { IconPipe } from '../../pipe/icon.pipe';
 import { LessonDetailsComponent } from './lessons-details/lessons-details.component';
 import { UserService } from '../../services/user.service';
 import { Observable } from 'rxjs';
-import { User } from '../../models/user.model';
+import { User, Role } from '../../models/user.model'; // ודא שהנתיב נכון
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-lessons',
   standalone: true,
-  imports: [MatListModule,MatIconModule,MatButtonModule,MatDialogModule,MatInputModule,MatFormFieldModule,MatCardModule,CommonModule
-    ,MatGridListModule,LessonDetailsComponent,IconPipe
-  ],
+  imports: [MatListModule, MatIconModule, MatButtonModule, MatDialogModule, MatInputModule, MatFormFieldModule, MatCardModule, CommonModule, MatGridListModule, LessonDetailsComponent, IconPipe],
   templateUrl: './lessons.component.html',
-  styleUrl: './lessons.component.css'
+  styleUrls: ['./lessons.component.css']
 })
 export class LessonsComponent implements OnInit {
   courseId: number | undefined;
@@ -32,12 +30,18 @@ export class LessonsComponent implements OnInit {
   addFlag = false;
   editFlag = false;
   lessons: Lesson[] = []; 
-  user$!: Observable<User>; // הגדרה של user$ כאן
+  user$!: Observable<User>;
+  user!: User; // הוספת המשתנה user
+  Role = Role; // הוסף שורה זו
 
   constructor(private activatedRoute: ActivatedRoute, private lessonService: LessonService, private userService: UserService) { }
 
   ngOnInit(): void {
-    this.user$ = this.userService.currentUserObservable; // העברת ההגדרה לכאן
+    this.user$ = this.userService.currentUserObservable;
+    this.user$.subscribe(user => {
+      this.user = user; // קבלת הערכים מה-Observable
+    });
+    
     this.activatedRoute.paramMap.subscribe(params => {
       const id = params.get('id');
       if (id) {
@@ -58,14 +62,14 @@ export class LessonsComponent implements OnInit {
   }
 
   addLesson(les: Lesson): void {
-    if (les != null) {
-      this.lessonService.addLesson(les).subscribe(() => {
-        this.loadLessons(); 
-      });
+    if (les !== null && les !== undefined) { // השתמש ב-!== כדי לבדוק גם על undefined
+        this.lessonService.addLesson(les).subscribe(() => {
+            this.loadLessons(); 
+        });
     }
     this.addFlag = false;
-  }
-
+}
+ 
   updateLesson(les: Lesson): void {
     if (les != null) {
       this.lessonService.updateLesson(les.id, les).subscribe(() => {

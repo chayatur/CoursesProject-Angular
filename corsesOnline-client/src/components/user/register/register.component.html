@@ -1,0 +1,54 @@
+<div class="auth-container">
+  <mat-card class="auth-card">
+    <mat-card-header>
+      <mat-card-title>הרשמה</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form (ngSubmit)="register()" [formGroup]="registerForm">
+        <mat-form-field appearance="outline">
+          <mat-label>שם</mat-label>
+          <input matInput formControlName="name" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>אימייל</mat-label>
+          <input matInput type="email" formControlName="email" required>
+          @if(registerForm.get('email')?.invalid && registerForm.get('email')?.touched){
+            <mat-error>
+              שגיאה: מייל לא תקין
+            </mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>סיסמה</mat-label>
+          <input matInput type="password" formControlName="password" required>
+          @if(registerForm.get('password')?.hasError('required') && registerForm.get('password')?.touched){
+            <mat-error>
+              שגיאה: סיסמה שדה חובה
+            </mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>תפקיד</mat-label>
+          <mat-select formControlName="role" required>
+            <mat-option value="admin">מנהל</mat-option>
+            <mat-option value="teacher">מורה</mat-option>
+            <mat-option value="student">תלמיד</mat-option>
+          </mat-select>
+          @if(registerForm.get('role')?.invalid && registerForm.get('role')?.touched){
+            <mat-error>
+              שגיאה: תפקיד שדה חובה
+            </mat-error>
+          }
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit">הרשמה</button>
+      </form>
+    </mat-card-content>
+    <mat-card-footer>
+      <p>כבר יש לך חשבון? <a routerLink="/login">התחבר כאן</a></p>
+    </mat-card-footer>
+  </mat-card>
+</div>

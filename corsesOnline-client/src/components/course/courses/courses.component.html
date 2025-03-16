@@ -1,0 +1,38 @@
+<div class="course-container" style="background-color: #f9f9f9; padding: 20px; border-radius: 8px;">
+    <mat-card class="course-card" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+      <h1 style="color: #3f51b5; font-family: 'Arial', sans-serif;">{{ course.title }}</h1>
+      <h2 style="color: #555; font-family: 'Arial', sans-serif;">{{ course.description }}</h2>
+  
+      <h1 style="border-bottom: 2px solid #3f51b5; padding-bottom: 10px;">Lessons:</h1>
+  
+      <div class="lessons-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px;">
+        @for (lesson of lessons; track lesson.id) {
+          <mat-card class="lesson-card" style="border: 1px solid #ddd; border-radius: 5px;">
+            <mat-card-header>
+              <mat-card-title style="font-weight: bold;">{{ lesson.title }}</mat-card-title>
+              <span class="lesson-actions">
+                @if (role == 'teacher') {
+                  <button mat-icon-button (click)="editLesson(lesson)">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  <button mat-icon-button color="warn" (click)="deleteLesson(lesson.id)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                }
+              </span>
+            </mat-card-header>
+            <mat-card-content>
+              <p>{{ lesson.content }}</p>
+            </mat-card-content>
+          </mat-card>
+        }
+  
+        @if (role == 'teacher') {
+          <button mat-raised-button class="add-lesson-btn" style="background-color: #3f51b5; color: white;" [routerLink]="['/home', 'addLesson', courseId]" routerLinkActive="button-active">
+            <mat-icon>add</mat-icon> הוסף שיעור
+          </button>
+        }
+      </div>
+    </mat-card>
+  </div>
+  

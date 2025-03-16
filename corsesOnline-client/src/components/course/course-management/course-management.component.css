@@ -1,0 +1,15 @@
+.course-list {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+mat-list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+mat-card-actions {
+    display: flex;
+    justify-content: flex-end;
+}
