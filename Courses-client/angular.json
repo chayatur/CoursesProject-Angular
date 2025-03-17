@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "coursesProject": {
+    "final-project": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/courses-project",
+            "outputPath": "dist/final-project",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -32,9 +32,9 @@
             ],
             "scripts": [],
             "server": "src/main.server.ts",
-            "outputMode": "server",
+            "prerender": true,
             "ssr": {
-              "entry": "src/server.ts"
+              "entry": "server.ts"
             }
           },
           "configurations": {
@@ -47,8 +47,8 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "4kB",
-                  "maximumError": "8kB"
+                  "maximumWarning": "2kB",
+                  "maximumError": "4kB"
                 }
               ],
               "outputHashing": "all"
@@ -65,10 +65,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "coursesProject:build:production"
+              "buildTarget": "final-project:build:production"
             },
             "development": {
-              "buildTarget": "coursesProject:build:development"
+              "buildTarget": "final-project:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -101,6 +101,6 @@
     }
   },
   "cli": {
-    "analytics": "621bf882-f458-415f-bec1-95f6214bd0ba"
+    "analytics": "c6e21deb-51ef-455f-b1bd-2843182c75eb"
   }
 }

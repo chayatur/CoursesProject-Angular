@@ -1,15 +1,16 @@
 import { Component } from '@angular/core';
-import { RouterLink, RouterLinkActive, RouterModule, RouterOutlet } from '@angular/router';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
-import { HomeComponent } from '../components/home/home.component';
-import { LoginComponent } from '../components/user/login/login.component';
+import { RouterOutlet } from '@angular/router';
+import { AuthComponent } from '../components/auth/auth.component';
+import { ShowCourseComponent } from '../components/show-course/show-course.component';
+
+
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet,RouterModule,RouterLink,RouterLinkActive,RouterModule,MatToolbarModule,MatButtonModule,HomeComponent,LoginComponent],
+  standalone: true,
+  imports: [RouterOutlet,AuthComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'CoursesProject';
+  title = 'final-project';
 }

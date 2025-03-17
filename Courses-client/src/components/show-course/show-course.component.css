@@ -1,0 +1,58 @@
+.course-container {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  flex-wrap: wrap;
+  background-color: #e9ecef; /* צבע רקע בהיר יותר */
+}
+
+.course-card {
+  width: 100%;
+  max-width: 700px; /* הקטנת רוחב הקלף */
+  padding: 20px;
+  background-color: #ffffff; /* צבע רקע לבן */
+  border-radius: 12px; /* פינות מעוגלות יותר */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* צל יותר בולט */
+  flex: 1 1 30%; /* קלפים יימתחו עד 30% */
+  box-sizing: border-box;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  margin: 10px; /* רווח בין קלפים */
+}
+
+.lessons-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* כל עמודה בגודל מינימום של 280px */
+  gap: 15px; /* רווח בין קלפים */
+  margin-top: 15px;
+}
+
+.lesson-card {
+  background-color: #f8f9fa; /* צבע רקע בהיר לקלפי השיעורים */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 15px; /* padding לקלף */
+  transition: transform 0.2s; /* אנימציה חלקה */
+}
+
+.lesson-card:hover {
+  transform: translateY(-5px); /* אפקט הזזה קל בה-hover */
+}
+
+.add-lesson-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ff9800; /* צבע כתום */
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px; /* גודל טקסט גדול יותר */
+  margin-top: 20px;
+  border-radius: 5px;
+  text-transform: none;
+  transition: background-color 0.3s; /* אנימציה חלקה */
+}
+
+.add-lesson-btn:hover {
+  background-color: #e68a00; /* צבע כהה יותר בה-hover */
+}

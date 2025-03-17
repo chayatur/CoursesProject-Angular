@@ -1,27 +1,51 @@
-.app-header {
+.header {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column; /* שינוי לכיוון עמודה */
+    align-items: center; /* מיקום הכפתורים במרכז */
+    background-color: #1a1a1a; /* צבע רקע כהה יותר */
+    padding: 20px; /* padding שונה */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); /* צל להדר */
+}
+
+.nav {
+    display: flex;
+    flex-direction: column; /* שינוי לכיוון עמודה */
+    gap: 10px; /* רווח בין הכפתורים */
+    margin-top: 10px; /* רווח מעל הכפתורים */
+}
+
+.btn {
+    color: #ff9800; /* צבע טקסט כתום */
+    font-weight: bold;
+    display: flex;
     align-items: center;
-    padding: 16px;
-    background-color: #3f51b5; /* צבע רקע */
-    color: white; /* צבע טקסט */
-  }
-  
-  .logo {
-    display: flex;
-    align-items: center;
-  }
-  
-  .logo mat-icon {
-    margin-right: 8px; /* רווח בין האייקון לטקסט */
-  }
-  
-  .auth-buttons {
-    display: flex;
-    gap: 16px; /* רווח בין הכפתורים */
-  }
-  
-  button mat-icon {
-    margin-right: 4px; /* רווח בין האייקון לטקסט בכפתור */
-  }
-  
+    gap: 8px; /* רווח קטן יותר בין האייקון לטקסט */
+    font-size: 16px; /* גודל טקסט סביר יותר */
+    border-radius: 8px; /* פינות מעוגלות יותר */
+    padding: 10px 15px; /* padding שונה */
+    background-color: #2c2c2c; /* צבע רקע כהה לכפתורים */
+    border: 2px solid #ff9800; /* גבול כתום לכפתורים */
+    transition: background-color 0.3s, transform 0.3s; /* אנימציה חלקה */
+}
+
+.btn:hover {
+    background-color: #ff9800; /* שינוי צבע רקע בה-hover */
+    color: black; /* צבע טקסט שחור */
+    transform: scale(1.05); /* אפקט הגדלה */
+}
+
+/* :host {
+    display: block;
+    width: 100%;
+    height: 100vh; 
+  background-image: url('/assets/image/background.jpg'); 
+    background-size: cover; 
+    background-position: center center; 
+    background-repeat: no-repeat; 
+} */
+
+h1 {
+    color: #ff9800; /* צבע כתום לכותרת */
+    font-size: 2rem; /* גודל טקסט סביר יותר */
+    margin: 0; /* ביטול רווחים סביב הכותרת */
+}

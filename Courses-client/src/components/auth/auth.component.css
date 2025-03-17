@@ -1,0 +1,45 @@
+.button-container {
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  backdrop-filter: blur(5px); /* מוסיף אפקט טשטוש לרקע */
+}
+
+.button-container h1 {
+  font-size: 3rem; /* גודל טקסט גדול יותר */
+  margin-bottom: 15px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* צל לטקסט */
+  color: #ff9800; /* צבע כתום */
+}
+
+.button-container p {
+  font-size: 1.5rem; /* גודל טקסט גדול יותר */
+  margin-bottom: 25px;
+  opacity: 0.9; /* שקיפות גבוהה יותר */
+  color: #ffffff; /* צבע טקסט לבן */
+}
+
+.button-container button {
+  margin: 15px;
+  width: 220px; /* שינוי רוחב הכפתור */
+  background-color: #ff9800; /* צבע רקע כתום */
+  color: black; /* צבע טקסט שחור */
+  border: 2px solid white; /* מסגרת לבנה */
+  border-radius: 8px; /* פינות מעוגלות יותר */
+  font-size: 1.5rem; /* גודל טקסט גדול יותר */
+  padding: 12px; /* padding נוסף */
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.button-container button:hover {
+  background-color: #e68a00; /* גוון כתום כהה */
+  border-color: #fff; /* מסגרת לבנה יותר */
+  transform: scale(1.05); /* אפקט הגדלה */
+}
